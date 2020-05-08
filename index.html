@@ -1,0 +1,115 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="./main.css">
+
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+
+     // Create a <button> element
+    var arr = [100, 56, 45, 90, 76, 45, 23, 12, 567, 8, 23, 23, 65, 34, 12, 70, 98, 5, 45];
+    var arLength = arr.length;
+var parent = document.createElement("div");
+parent.className="parent";
+parent.id="parent";
+   document.body.appendChild(parent);
+
+
+
+    var row = document.createElement("div");
+    //    row.innerHTML = "row" + i;
+
+    row.id = "row";
+    row.className="row container";
+    document.getElementById('parent').appendChild(row);
+    for (var i = 0; i < arr.length; i++) {
+        var col = document.createElement("td");   // Create a <button> element
+        col.className = "column";
+        col.id = "col" + i;
+        document.getElementById('row').appendChild(col);
+
+        var bar = document.createElement("div");
+        bar.innerHTML = i;
+        bar.innerHTML = arr[i];
+        bar.id = "bar" + i;
+        bar.className = "bar";
+        bar.style.height = arr[i];
+        console.log("ele", arr);
+        document.getElementById("col" + i).appendChild(bar);
+    }
+
+    console.log("break point");
+   
+    var j = 0;
+    function myloop() {
+        console.log("counte start", arLength);
+
+        console.log("Time out started");
+
+
+        var temp = arr[j];
+        if (arr[j] > arr[j + 1]) {
+            arr[j] = arr[j + 1];
+            arr[j + 1] = temp;
+        }
+        j++;
+        console.log("arr", arr);
+        var element = document.getElementById("row");
+        element.parentNode.removeChild(element);
+
+        var row = document.createElement("div");
+         row.className="row container";
+        row.id = "row";
+        document.getElementById('parent').appendChild(row);
+        for (var i = 0; i < arr.length; i++) {
+            var col = document.createElement("td");   // Create a <button> element
+            col.className = "column";
+            col.id = "col" + i;
+            document.getElementById('row').appendChild(col);
+
+            var bar = document.createElement("div");
+            bar.innerHTML = i;
+            bar.innerHTML = arr[i];
+            bar.id = "bar" + i;
+            bar.className = "bar";
+            bar.style.height = arr[i];
+            console.log("ele", arr);
+            document.getElementById("col" + i).appendChild(bar);
+        }
+
+
+        arLength--;
+        console.log("conter", arLength);
+
+        if (arLength <= 0) {
+            clearInterval(interval);
+            console.log("loop called");
+        }
+
+    }
+
+
+    function loopTwo() {
+        arLength = arr.length;
+        j = 0;
+        var interval = setInterval(myloop, 1000);
+        arLength--;
+        if (arLength <= 0) {
+            clearInterval(intTwo);
+            console.log("loop 2 called");
+        }
+    }
+
+    var intTwo = setInterval(loopTwo, 100);
+
+</script>
+
+</html>

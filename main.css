@@ -1,0 +1,18 @@
+.bar {
+    background-color: rgb(148, 146, 11);
+    width: 6px;
+    padding:0px;
+    padding-left:0px;
+}
+.column {
+    background-color: black;
+    border: black solid 2px;
+    padding-left:0px;
+    padding-right:0px;
+    margin: 0%;
+    width: 10px;
+    vertical-align: top;
+}
+.parent{
+    background: black;
+}
