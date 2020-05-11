@@ -20,6 +20,8 @@
 
                 <button onclick="hqndleQuickSort()" class="btn">Quick Sort</button>
                 <button onclick="bubbleSort()" class="btn">Bubble Sort</button>
+                <button onclick="hqndleMergeSort()" class="btn">Merge Sort</button>
+
             </div>
 
         </div>
@@ -30,7 +32,7 @@
 <script>
 
     // Create a <button> element
-    var arr = [100, 56, 45, 90, 76, 45, 23, 12, 567, 8, 23, 23, 65, 34, 12, 70, 98, 5, 45];
+    var arr = [100, 432, 23, 23, 34, 45, 45, 56, 45, 90, 76, 45, 23, 12, 567, 8, 23, 23, 65, 34, 12, 70, 98, 5, 45];
     var arLength = arr.length;
 
     var row = document.createElement("div");
@@ -70,8 +72,67 @@
         displayArray(quickSort(arr, 0, arr.length - 1), arr.length);
     }
 
-  
+    function hqndleMergeSort() {
+        var animation = [];
+        var iterations = 0;
+        displayArray(mergeSort(arr, 0, arr.length - 1), arr.length);
+    }
 
+    function mergeSort(arr, l, r) {
+        var m, i = 0, j = 0, k = 0;
+        if (l < r) {
+            m = Math.floor((l + r) / 2);
+            mergeSort(arr, l, m);
+            mergeSort(arr, m + 1, r);
+            merge(arr, l, m, r);
+            return animation;
+        }
+        
+    }
+
+    function merge(arr, l, m, r) {
+        var n1 = l - m + 1;
+        var n2 = m - r;
+        var k = 0,i =0,j=0;
+        var temp1 = [];
+        var temp2 = [];
+
+        for ( i = 0; i < n1; i++) {
+            temp1[i] = arr[l + i];
+        }
+        for ( j = 0; j < n2; j++) {
+            temp2[j] = arr[m + 1 + j];
+        }
+
+
+        while (i < n1 && j < n2) {
+            if (temp1[i] < temp[2]) {
+                arr[k] = temp1[i];
+                i++;
+            }
+            else {
+                arr[k] = temp2[j];
+                j++;
+
+            }
+            k++;
+        }
+        while (i < n1) {
+            arr[k] = temp1[i];
+            i++;
+            k++;
+        }
+        while (j < n2) {
+            arr[k] = temp2[j];
+            j++;
+            k++;
+        }
+
+        animation[iterations] = arr.slice(0);
+        iterations++;
+        console.log("merge", animation);
+        return animation;
+    }
 
 
     var element = null;
