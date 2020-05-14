@@ -10,47 +10,31 @@ function bubbleSortNextIteration() {
     }
     j++;
     console.log("arr", arr);
-    var element = document.getElementById("row");
-    element.parentNode.removeChild(element);
-    var row = document.createElement("div");
-    row.className = "row container";
-    row.id = "row";
-    document.getElementById('parent').appendChild(row);
-    for (var i = 0; i < arr.length; i++) {
-        var col = document.createElement("td");   // Create a <button> element
-        col.className = "column";
-        col.id = "col" + i;
-        document.getElementById('row').appendChild(col);
-        var bar = document.createElement("div");
-        bar.innerHTML = i;
-        bar.innerHTML = arr[i];
-        bar.id = "bar" + i;
-        bar.className = "bar";
-        bar.style.height = arr[i];
-        console.log("ele", arr);
-        document.getElementById("col" + i).appendChild(bar);
-    }
+
 
     arLength--;
     console.log("conter", arLength);
 
-    if (arLength <= 0) {
-        clearInterval(interval);
-        console.log("loop called");
-    }
+
 
 }
 
 
-function bubbleSortFirstIteration() {
-    arLength = arr.length;
-    j = 0;
-    var interval = setInterval(bubbleSortNextIteration, 1000);
-    arLength--;
-    if (arLength <= 0) {
-        clearInterval(intTwo);
-        console.log("loop 2 called");
+function bubbleSortFirstIteration(arr) {
+    var temp;
+    for (var i = 0; i < arr.length; i++) {
+        for (var j = 0; j < arr.length; j++) {
+            temp = arr[j];
+            if (arr[j] > arr[j + 1]) {
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+            animation[iterations] = arr.slice(0);
+            iterations++;
+            console.log("bubble", animation);
+        }
     }
+    return animation;
 }
 
 
@@ -99,4 +83,109 @@ function partition(arr, low, high) {
     return { t, animation };
 }
 
+function mergeSort(arr, l, r) {
+    var m, i = 0, j = 0, k = 0;
+    if (l < r) {
+        m = Math.floor((l + r) / 2);
+        mergeSort(arr, l, m);
+        mergeSort(arr, m + 1, r);
+        merge(arr, l, m, r);
+        return animation;
+    }
+}
 
+function merge(arr, l, m, r) {
+    var n1 = m - l + 1;
+    var n2 = r - m;
+    var k = 0, i = 0, j = 0;
+    var temp1 = [];
+    var temp2 = [];
+
+    for (i = 0; i < n1; i++) {
+        temp1[i] = arr[l + i];
+    }
+    for (j = 0; j < n2; j++) {
+        temp2[j] = arr[m + 1 + j];
+    }
+
+    /* Merge the temp arrays back into arr[l..r]*/
+    i = 0; // Initial index of first subarray 
+    j = 0; // Initial index of second subarray 
+    k = l; // Initial index of merged subarray 
+    while (i < n1 && j < n2) {
+        if (temp1[i] < temp2[j]) {
+            arr[k] = temp1[i];
+            i++;
+        }
+        else {
+            arr[k] = temp2[j];
+            j++;
+
+        }
+        animation[iterations] = arr.slice(0);
+        iterations++;
+        k++;
+    }
+    while (i < n1) {
+        arr[k] = temp1[i];
+        i++;
+        k++;
+    }
+    while (j < n2) {
+        arr[k] = temp2[j];
+        j++;
+        k++;
+    }
+
+    animation[iterations] = arr.slice(0);
+    iterations++;
+    console.log("merge", animation);
+    return animation;
+}
+
+function heapSort(arr, n) {
+    for (var i = Math.floor(n / 2) - 1; i >= 0; i--) {
+        heapify(arr, n, i);
+    }
+
+    for (var i = n - 1; i > 0; i--) {
+        console.log(swap(10, 20));
+        // swap(arr[0], arr[i]);
+        // console.log(swap(arr[0], arr[i]));
+        var temp = arr[0];
+        arr[0] = arr[i];
+        arr[i] = temp;
+        heapify(arr, i, 0);
+    }
+    return animation;
+}
+
+function heapify(arr, n, i) {
+
+    var larget = i;
+    var l = 2 * i + 1;
+    var r = 2 * i + 2;
+    var temp;
+    if (l < n && arr[larget] < arr[l]) {
+        larget = l;
+    }
+    if (r < n && arr[larget] < arr[r]) {
+        larget = r;
+    }
+    animation[iterations] = arr.slice(0);
+    iterations++;
+    console.log("heap", animation);
+    if (larget != i) {
+        console.log(swap(10, 20));
+        //  swap(arr[i], arr[larget]);
+        temp = arr[i];
+        arr[i] = arr[larget];
+        arr[larget] = temp;
+        heapify(arr, n, larget);
+    }
+}
+
+function swap(a, b) {
+
+    return [b, a]
+}

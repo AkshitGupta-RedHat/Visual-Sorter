@@ -12,15 +12,17 @@
 <body>
 
     <div class="root" id="root">
-        <div class="nav green">
-            <div class="nav-wrapper green">
+        <div class="nav trasparent">
+            <div class="nav-wrapper trasparent">
+                <button onclick="hqndleQuickSort()" class="btn">Create Array</button>
+                <div class="right">
+                    <button onclick="hqndleQuickSort()" class="btn">Quick Sort</button>
+                    <button onclick="handleBubbleSort()" class="btn">Bubble Sort</button>
+                    <button onclick="hqndleMergeSort()" class="btn">Merge Sort</button>
+                    <button onclick="handleHeapSort()" class="btn">Heap Sort</button>
+                </div>
 
 
-                <a href="#" class="btn">Create Attay</a>
-
-                <button onclick="hqndleQuickSort()" class="btn">Quick Sort</button>
-                <button onclick="bubbleSort()" class="btn">Bubble Sort</button>
-                <button onclick="hqndleMergeSort()" class="btn">Merge Sort</button>
 
             </div>
 
@@ -32,9 +34,10 @@
 <script>
 
     // Create a <button> element
-    var arr = [100, 432, 23, 23, 34, 45, 45, 56, 45, 90, 76, 45, 23, 12, 567, 8, 23, 23, 65, 34, 12, 70, 98, 5, 45];
-    var arLength = arr.length;
+    var arr = [100, 432, 23, 23, 34, 1, 8, 3, 56, 34, 32, 3, 66, 5, 65, 43, 32, 22, 3, 54, 5, 5, 62, 3, 32, 3];
 
+
+    var arLength = arr.length;
     var row = document.createElement("div");
     row.id = "row";
     row.className = "row container";
@@ -56,19 +59,24 @@
         document.getElementById("col" + i).appendChild(bar);
     }
 
+
     console.log("break point");
 
     var j = 0;
 
 
 
-    function bubbleSort() {
-        setInterval(bubbleSortFirstIteration, 100);
+    function handleBubbleSort() {
+        var animation = [];
+        var iterations = 0;
+
+        displayArray(bubbleSortFirstIteration(arr), arr.length);
     }
-    var animation = [];
-    var iterations = 0;
+
 
     function hqndleQuickSort() {
+        var animation = [];
+        var iterations = 0;
         displayArray(quickSort(arr, 0, arr.length - 1), arr.length);
     }
 
@@ -78,62 +86,15 @@
         displayArray(mergeSort(arr, 0, arr.length - 1), arr.length);
     }
 
-    function mergeSort(arr, l, r) {
-        var m, i = 0, j = 0, k = 0;
-        if (l < r) {
-            m = Math.floor((l + r) / 2);
-            mergeSort(arr, l, m);
-            mergeSort(arr, m + 1, r);
-            merge(arr, l, m, r);
-            return animation;
-        }
-        
+    var animation = [];
+    var iterations = 0;
+
+
+    function handleHeapSort() {
+        var animation = [];
+        var iterations = 0;
+        displayArray(heapSort(arr, arr.length), arr.length);
     }
-
-    function merge(arr, l, m, r) {
-        var n1 = l - m + 1;
-        var n2 = m - r;
-        var k = 0,i =0,j=0;
-        var temp1 = [];
-        var temp2 = [];
-
-        for ( i = 0; i < n1; i++) {
-            temp1[i] = arr[l + i];
-        }
-        for ( j = 0; j < n2; j++) {
-            temp2[j] = arr[m + 1 + j];
-        }
-
-
-        while (i < n1 && j < n2) {
-            if (temp1[i] < temp[2]) {
-                arr[k] = temp1[i];
-                i++;
-            }
-            else {
-                arr[k] = temp2[j];
-                j++;
-
-            }
-            k++;
-        }
-        while (i < n1) {
-            arr[k] = temp1[i];
-            i++;
-            k++;
-        }
-        while (j < n2) {
-            arr[k] = temp2[j];
-            j++;
-            k++;
-        }
-
-        animation[iterations] = arr.slice(0);
-        iterations++;
-        console.log("merge", animation);
-        return animation;
-    }
-
 
     var element = null;
     var i = 0;
