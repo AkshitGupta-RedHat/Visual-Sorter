@@ -11,54 +11,87 @@
 
 <body>
 
-    <div class="root" id="root">
-        <div class="nav trasparent">
-            <div class="nav-wrapper trasparent">
-                <button onclick="hqndleQuickSort()" class="btn">Create Array</button>
-                <div class="right">
-                    <button onclick="hqndleQuickSort()" class="btn">Quick Sort</button>
-                    <button onclick="handleBubbleSort()" class="btn">Bubble Sort</button>
-                    <button onclick="hqndleMergeSort()" class="btn">Merge Sort</button>
-                    <button onclick="handleHeapSort()" class="btn">Heap Sort</button>
+    <div class="root " id="root">
+        <div class="nav black">
+            <div class="nav-wrapper ">
+                <div class="row top-padding">
+                    <div class="brand-logo left col s12 l1">
+                        <img src="./img/logosmall.PNG" />
+                    </div>
+                   
+                    <div class="slidecontainer col left white-text border-cover" style="padding-top: 5px;font-size: .1rem;">ARRrrrAY SIZE &
+                        SORTING SPEED
+                        <input type="range" min="10" max="100" value="100" step="1" class="slider col right" id="myRange"
+                            oninput="SetVolume(this.value)" onchange="SetVolume(this.value)">
+                    </div>
+                    <div class="col right">
+                        <button onclick="handleQuickSort()" class="btn">Quick Sort</button>
+                        <button onclick="handleMergeSort()" class="btn">Merge Sort</button>
+                        <button onclick="handleHeapSort()" class="btn">Heap Sort</button>
+                        <button onclick="handleBubbleSort()" class="btn">Bubble Sort</button>
+                    </div>
                 </div>
-
-
-
             </div>
-
         </div>
         <div class="parent" id="parent"></div>
 
     </div>
 </body>
+<script
+  src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+  integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+  crossorigin="anonymous"></script>
 <script>
 
     // Create a <button> element
-    var arr = [100, 432, 23, 23, 34, 1, 8, 3, 56, 34, 32, 3, 66, 5, 65, 43, 32, 22, 3, 54, 5, 5, 62, 3, 32, 3];
+    var arr = [], arrayLength, time;
 
+    arrayLength = 100;
 
-    var arLength = arr.length;
-    var row = document.createElement("div");
-    row.id = "row";
-    row.className = "row container";
-    document.getElementById('parent').appendChild(row);
+    $(document).ready(function(){
+        initArray(arrayLength);
+    })
 
-    for (var i = 0; i < arr.length; i++) {
-        var col = document.createElement("td");   // Create a <button> element
-        col.className = "column";
-        col.id = "col" + i;
-        document.getElementById('row').appendChild(col);
-
-        var bar = document.createElement("div");
-        bar.innerHTML = i;
-        bar.innerHTML = arr[i];
-        bar.id = "bar" + i;
-        bar.className = "bar";
-        bar.style.height = arr[i];
-        console.log("ele", arr);
-        document.getElementById("col" + i).appendChild(bar);
+    function SetVolume(e) {
+        arrayLength = e;
+        time = 1000 / e;
+        console.log("range", e);
+        initArray(arrayLength)
     }
 
+    function initArray(arrayLength) {
+        if (document.getElementById("row")) {
+            element = document.getElementById("row");
+            element.parentNode.removeChild(element);
+            arr=[];
+        }
+
+        for (var i = 0; i < arrayLength; i++) {
+            arr[i] = Math.random() * 500;
+        }
+
+        var arLength = arr.length;
+        var row = document.createElement("div");
+        row.id = "row";
+        row.className = "row container";
+        document.getElementById('parent').appendChild(row);
+
+        for (var i = 0; i < arr.length; i++) {
+            var col = document.createElement("td");   // Create a <button> element
+            col.className = "column";
+            col.id = "col" + i;
+            document.getElementById('row').appendChild(col);
+
+            var bar = document.createElement("div");
+            //   bar.innerHTML = i;
+            //   bar.innerHTML = arr[i];
+            bar.id = "bar" + i;
+            bar.className = "bar";
+            bar.style.height = arr[i];
+            console.log("ele", arr);
+            document.getElementById("col" + i).appendChild(bar);
+        }
+    }
 
     console.log("break point");
 
@@ -69,20 +102,23 @@
     function handleBubbleSort() {
         var animation = [];
         var iterations = 0;
-
-        displayArray(bubbleSortFirstIteration(arr), arr.length);
+        alert("Since the time complexity of Bubble Sort is n*n it might take some time to show the results. Page might become unresposive!")
+        i=0;
+        displayArray(bubbleSort(arr), arr.length);
     }
 
 
-    function hqndleQuickSort() {
+    function handleQuickSort() {
         var animation = [];
         var iterations = 0;
+        i=0;
         displayArray(quickSort(arr, 0, arr.length - 1), arr.length);
     }
 
-    function hqndleMergeSort() {
+    function handleMergeSort() {
         var animation = [];
         var iterations = 0;
+        i=0;
         displayArray(mergeSort(arr, 0, arr.length - 1), arr.length);
     }
 
@@ -93,6 +129,7 @@
     function handleHeapSort() {
         var animation = [];
         var iterations = 0;
+        i=0;
         displayArray(heapSort(arr, arr.length), arr.length);
     }
 
@@ -115,8 +152,8 @@
                     col.id = "col" + j;
                     document.getElementById('row').appendChild(col);
                     var bar = document.createElement("div");
-                    bar.innerHTML = j;
-                    bar.innerHTML = arr[i][j];
+                    //    bar.innerHTML = j;
+                    //    bar.innerHTML = arr[i][j];
                     bar.id = "bar" + i;
                     bar.className = "bar";
                     bar.style.height = arr[i][j];
@@ -127,8 +164,9 @@
                 i++;
                 displayArray(arr, len);
             }
-        }, 100);
-
+        }, time);
+animation=[];
+iterations=0;
     }
 
 </script>

@@ -1,46 +1,174 @@
-<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-     <!-- Compiled and minified CSS -->
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="./main.css">
+    <script src="sortingAlgo.js"></script>
+    <title>Visual Sorter</title>
+</head>
 
-    <title>React App</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+<body>
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+    <div class="root " id="root">
+        <div class="nav black">
+            <div class="nav-wrapper ">
+                <div class="row top-padding">
+                    <div class="brand-logo left col s12 l1">
+                        <img src="./img/logosmall.PNG" />
+                    </div>
+                   
+                    <div class="slidecontainer col left white-text border-cover l4 m12 s12 font" style="padding-top: 5px;">ARRAY SIZE &
+                        SORTING SPEED
+                        <input type="range" min="10" max="100" value="100" step="1" class="slider col right" id="myRange"
+                            oninput="SetVolume(this.value)" onchange="SetVolume(this.value)">
+                    </div>
+                    <div class="left col s12 l7">
+                        <button onclick="handleQuickSort()" class="btn col s12 l3 font">Quick Sort</button>
+                        <button onclick="handleMergeSort()" class="btn col s12  l3 font">Merge Sort</button>
+                        <button onclick="handleHeapSort()" class="btn col s12   l3 font">Heap Sort</button>
+                        <button onclick="handleBubbleSort()" class="btn col s12  l3  font">Bubble Sort</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="parent col l12 s12" id="parent"></div>
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-  </body>
+    </div>
+</body>
+<script
+  src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+  integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+  crossorigin="anonymous"></script>
+<script>
+
+    // Create a <button> element
+    var arr = [], arrayLength, time;
+
+    arrayLength = 100;
+
+    $(document).ready(function(){
+        initArray(arrayLength);
+    })
+
+    function SetVolume(e) {
+        arrayLength = e;
+        time = 1000 / e;
+        console.log("range", e);
+        initArray(arrayLength)
+    }
+
+    function initArray(arrayLength) {
+        if (document.getElementById("row")) {
+            element = document.getElementById("row");
+            element.parentNode.removeChild(element);
+            arr=[];
+        }
+
+        for (var i = 0; i < arrayLength; i++) {
+            arr[i] = Math.random() * 500;
+        }
+
+        var arLength = arr.length;
+        var row = document.createElement("div");
+        row.id = "row";
+        row.className = "row container";
+        document.getElementById('parent').appendChild(row);
+
+        for (var i = 0; i < arr.length; i++) {
+            var col = document.createElement("td");   // Create a <button> element
+            col.className = "column";
+            col.id = "col" + i;
+            document.getElementById('row').appendChild(col);
+
+            var bar = document.createElement("div");
+            //   bar.innerHTML = i;
+            //   bar.innerHTML = arr[i];
+            bar.id = "bar" + i;
+            bar.className = "bar";
+            bar.style.height = arr[i];
+            console.log("ele", arr);
+            document.getElementById("col" + i).appendChild(bar);
+        }
+    }
+
+    console.log("break point");
+
+    var j = 0;
+
+
+
+    function handleBubbleSort() {
+        var animation = [];
+        var iterations = 0;
+        alert("Since the time complexity of Bubble Sort is n*n it might take some time to show the results. Page might become unresposive!")
+        i=0;
+        displayArray(bubbleSort(arr), arr.length);
+    }
+
+
+    function handleQuickSort() {
+        var animation = [];
+        var iterations = 0;
+        i=0;
+        displayArray(quickSort(arr, 0, arr.length - 1), arr.length);
+    }
+
+    function handleMergeSort() {
+        var animation = [];
+        var iterations = 0;
+        i=0;
+        displayArray(mergeSort(arr, 0, arr.length - 1), arr.length);
+    }
+
+    var animation = [];
+    var iterations = 0;
+
+
+    function handleHeapSort() {
+        var animation = [];
+        var iterations = 0;
+        i=0;
+        displayArray(heapSort(arr, arr.length), arr.length);
+    }
+
+    var element = null;
+    var i = 0;
+
+
+    function displayArray(arr, len) {
+        setTimeout(() => {
+            if (i < arr.length) {
+                element = document.getElementById("row");
+                element.parentNode.removeChild(element);
+                var row = document.createElement("div");
+                row.className = "row container";
+                row.id = "row";
+                document.getElementById('parent').appendChild(row);
+                for (var j = 0; j < len; j++) {
+                    var col = document.createElement("td");   // Create a <button> element
+                    col.className = "column";
+                    col.id = "col" + j;
+                    document.getElementById('row').appendChild(col);
+                    var bar = document.createElement("div");
+                    //    bar.innerHTML = j;
+                    //    bar.innerHTML = arr[i][j];
+                    bar.id = "bar" + i;
+                    bar.className = "bar";
+                    bar.style.height = arr[i][j];
+                    //   console.log("ele", arr);
+                    document.getElementById("col" + j).appendChild(bar);
+
+                }
+                i++;
+                displayArray(arr, len);
+            }
+        }, time);
+animation=[];
+iterations=0;
+    }
+
+</script>
+
 </html>
